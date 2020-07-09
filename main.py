@@ -23,13 +23,13 @@ def get_subnets(ip_network, **options):
 
     max_prefix = options.get("depth")
     if max_prefix is None:
-        max_prefix = 25
+        max_prefix = 32
     else:
         max_prefix = int(max_prefix)
 
     if max_prefix < start.prefixlen:
         print(
-            f"Network prefix {start.prefixlen} already beyond max prefix length: {max_prefix}"
+            f"Network prefix {start.prefixlen} already beyond max prefix length {max_prefix}"
         )
         exit(1)
 

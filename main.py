@@ -8,22 +8,22 @@ def main():
         "network", type=str, help="Network to subnet.",
     )
     parser.add_argument(
-        "-m", "--max-prefix",
-        type=int,
-        default=25,
-        help="Maximum prefix length.",
+        "-m", "--max-prefix", type=int, default=25, help="Maximum prefix length.",
     )
     parser.add_argument(
-        "-c", "--indent-char",
-        default=" ",
-        help="Characters to use for indentation.",
+        "-c", "--indent-char", default=" ", help="Characters to use for indentation.",
     )
 
     args = parser.parse_args()
-    parent_network = ipaddress.ip_network(args.network)
+    try:
+        parent_network = ipaddress.ip_network(args.network)
+    except ValueError:
+        exit(f"Supplied argument {args.network} is not a valid IPv4 or IPv6 network.")
 
-    if args.max_prefix < parent_network.prefixlen:
-        exit(f"Network prefix {args.max_prefix} already beyond max prefix length {parent_network.prefixlen}")
+    if args.max_prefix <= parent_network.prefixlen:
+        exit(
+            f"Network prefix {args.max_prefix} already at or beyond max prefix length {parent_network.prefixlen}."
+        )
 
     print(parent_network)
     get_subnets(parent_network, depth=args.max_prefix, indent_char=args.indent_char)

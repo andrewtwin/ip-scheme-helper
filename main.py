@@ -1,10 +1,35 @@
 import ipaddress
+import argparse
 
 
 def main():
-    max_prefix = 24
-    indent_char = ","
-    parent_network = ipaddress.ip_network("192.168.0.0/16")
+    parser = argparse.ArgumentParser(description="Subnet a network.")
+    parser.add_argument(
+        "network", type=str, help="Network to subnet.",
+    )
+    parser.add_argument(
+        "-m",
+        "--max-prefix",
+        dest="max_prefix",
+        type=int,
+        default=25,
+        help="Maximum prefix length.",
+    )
+    parser.add_argument(
+        "-c",
+        "--indent-char",
+        dest="indent",
+        type=str,
+        default=" ",
+        help="Characters to use for indentation.",
+    )
+
+    args = parser.parse_args()
+    max_prefix = args.max_prefix
+    indent_char = args.indent
+    parent_network = ipaddress.ip_network(args.network)
+
+    print(f"{parent_network}")
     get_subnets(parent_network, depth=max_prefix, indent_char=indent_char)
 
 

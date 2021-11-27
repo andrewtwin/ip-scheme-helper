@@ -1,10 +1,27 @@
 # ip-scheme-helper
 Generate a list of sub-networks from a starting network. Useful for creating a subnet allocation spreadsheet.
 
+## Usage
+```
+usage: main.py [-h] [-m MAX_PREFIX] [-c INDENT_CHAR] network
+
+Subnet a network.
+
+positional arguments:
+  network               Network to subnet.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -m MAX_PREFIX, --max-prefix MAX_PREFIX
+                        Maximum prefix length.
+  -c INDENT_CHAR, --indent-char INDENT_CHAR
+                        Characters to use for indentation.
+```
+
 ## Examples
 
 Subnet a /16 down to /20s:
-
+```
     python3 main.py 192.168.0.0/16 -m 20
     192.168.0.0/16
      192.168.0.0/17
@@ -37,9 +54,10 @@ Subnet a /16 down to /20s:
        192.168.224.0/19
         192.168.224.0/20
         192.168.240.0/20
+```
 
 Subnet a /12 down to /16 as a csv:
-
+```
     python3 main.py 172.16.0.0/12 -m 16 -c ","
     172.16.0.0/12
     ,172.16.0.0/13
@@ -72,3 +90,4 @@ Subnet a /12 down to /16 as a csv:
     ,,,172.30.0.0/15
     ,,,,172.30.0.0/16
     ,,,,172.31.0.0/16
+```
